@@ -13,6 +13,8 @@
 //limitations under the License.
 package main
 
+import "github.com/ottenwbe/golook-cli/cmd"
+
 func main() {
-	Run()
+	cmd.Run()
 }

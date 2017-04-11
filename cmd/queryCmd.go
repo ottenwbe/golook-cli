@@ -23,57 +23,78 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	QUERY_THIS        = "this"
+	QUERY_ALL         = "all"
+	QUERY_ALL_DEFAULT = ""
+)
+
+const (
+	QRY_COMMAND = "query"
+)
+
 var (
-	file   string
-	system string
+	file       string
+	system     string
+	golookIfce control.LookController
 )
 
 var queryCmd = &cobra.Command{
-	Use:   "query",
+	Use:   QRY_COMMAND,
 	Short: "Query the golook server.",
 	Long:  "Query system, files, and file locations from a golook server.",
 	Run: func(_ *cobra.Command, _ []string) {
-		golookIfce := control.NewController()
 		selectQueryAction(golookIfce)
 	},
 }
 
 func selectQueryAction(golookIfce control.LookController) {
+	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Selecting query action.")
 	switch system {
-	case "this":
-		queryForReportedFiles(golookIfce)
-	case "":
-		queryForAllFiles(golookIfce)
+	case QUERY_THIS:
+		queryForReportedFiles()
+	case QUERY_ALL, QUERY_ALL_DEFAULT:
+		queryForAllFiles()
 	default:
-		log.Fatal("System filtering  not supported yet")
+		log.Fatal("System filtering not supported yet")
 	}
 }
 
-func queryForAllFiles(golookIfce control.LookController) {
+func queryForAllFiles() {
+	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Query for all files.")
+
 	systemFiles, err := golookIfce.QueryAllSystemsForFile(file)
-	if err != nil {
-		log.WithError(err).Fatal("Could not query for files.")
-	}
-	b, err := json.Marshal(systemFiles)
-	if err != nil {
-		log.WithError(err).Fatal("Could not marshal files.")
-		fmt.Print(string(b))
-	}
-}
+	failOnError(err, "Could not query for files.")
 
-func queryForReportedFiles(golookIfce control.LookController) {
-	files, err := golookIfce.QueryReportedFiles()
-	if err != nil {
-		log.WithError(err).Fatal("Could not query for reported files.")
-	}
-	b, err := json.Marshal(files)
-	if err != nil {
-		log.WithError(err).Fatal("Could not marshal reported files.")
-	}
+	b, err := json.Marshal(systemFiles)
+	failOnError(err, "Could not marshal files.")
+
 	fmt.Print(string(b))
 }
 
+func queryForReportedFiles() {
+
+	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Query reported files.")
+
+	files, err := golookIfce.QueryReportedFiles()
+	failOnError(err, "Could not query for reported files.")
+
+	b, err := json.Marshal(files)
+	failOnError(err, "Could not marshal reported files.")
+
+	fmt.Print(string(b))
+}
+
+func failOnError(err error, errorDescription string) error {
+	if err != nil {
+		log.WithError(err).Fatal(errorDescription)
+	}
+	return err
+}
+
 func init() {
+	golookIfce = control.NewController()
+
 	RootCmd.AddCommand(queryCmd)
 	queryCmd.Flags().StringVarP(&file, "file", "f", "", "(required) file you are looking for")
 	queryCmd.Flags().StringVarP(&system, "system", "s", "this", "(optional) only look at the given the system for the file")

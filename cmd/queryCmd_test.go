@@ -16,12 +16,18 @@ package cmd
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/ottenwbe/golook/control"
 )
 
 var _ = Describe("The query command", func() {
+
+	BeforeEach(func() {
+		golookIfce = control.NewMockedLookController()
+	})
+
 	It("triggers a query for reported files, when system is set by using the keyword 'this'", func() {
-		system = "this"
-		//queryCmd.Run(nil, nil)
-		Expect(true).To(BeTrue())
+		system = QUERY_THIS
+		queryCmd.Run(nil, nil)
+		Expect(golookIfce.(*control.MockedLookController).Visited).To(BeTrue())
 	})
 })
