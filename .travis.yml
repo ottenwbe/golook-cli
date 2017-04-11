@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - 1.8
+
+before_script:
+  - for d in $(go list ./... | grep -v vendor); do go vet $d; done
+
+install:
+  - go get -v -t ./...
+  - go get github.com/onsi/ginkgo/ginkgo
+  - go get github.com/onsi/gomega
+  - export PATH=$PATH:$HOME/gopath/bin
+
+script:
+  - ginkgo *
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
