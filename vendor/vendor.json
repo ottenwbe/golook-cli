@@ -3,6 +3,13 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "vmxANXhQQL20RUqyEhUT4ndPiNk=",
+			"origin": "github.com/ottenwbe/golook/vendor/github.com/gorilla/mux",
+			"path": "github.com/gorilla/mux",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
+		},
+		{
 			"checksumSHA1": "OfZQmDaPU6iHLQkXJC9ZEdEBOg4=",
 			"path": "github.com/onsi/ginkgo",
 			"revision": "67b9df7f55fe1165fd9ad49aca7754cce01a42b8",
@@ -181,6 +188,37 @@
 			"path": "github.com/onsi/gomega/types",
 			"revision": "4ac488ac94a6dfbd2f7e01cc3bea24e2efc40663",
 			"revisionTime": "2017-03-22T15:59:01Z"
+		},
+		{
+			"checksumSHA1": "5oBYy0VHGSaOXlqlTyEWXngAWY8=",
+			"path": "github.com/ottenwbe/golook/communication",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
+		},
+		{
+			"checksumSHA1": "ZXi5K2LgdwECsXYSql49FAPmHos=",
+			"path": "github.com/ottenwbe/golook/repository",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
+		},
+		{
+			"checksumSHA1": "5oZP1KaBSTPHG6+DEHk/d+XDyQ8=",
+			"path": "github.com/ottenwbe/golook/routing",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
+		},
+		{
+			"checksumSHA1": "V79EwpO9wqai0elm9p209pG6Usg=",
+			"path": "github.com/ottenwbe/golook/utils",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
+		},
+		{
+			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
+			"origin": "github.com/ottenwbe/golook/vendor/github.com/satori/go.uuid",
+			"path": "github.com/satori/go.uuid",
+			"revision": "2d4fd8ff1f1bbefe184588b0bf5b381adcd087e6",
+			"revisionTime": "2017-04-11T20:39:44Z"
 		},
 		{
 			"checksumSHA1": "fabVNshbE6WKqfO9/ymL8JGFq+k=",

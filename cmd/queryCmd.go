@@ -17,8 +17,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ottenwbe/golook/control"
-
+	"github.com/ottenwbe/golook/routing"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -36,7 +35,7 @@ const (
 var (
 	file       string
 	system     string
-	golookIfce control.LookController
+	golookIfce routing.LookRouter
 )
 
 var queryCmd = &cobra.Command{
@@ -48,7 +47,7 @@ var queryCmd = &cobra.Command{
 	},
 }
 
-func selectQueryAction(golookIfce control.LookController) {
+func selectQueryAction(golookIfce routing.LookRouter) {
 	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Selecting query action.")
 	switch system {
 	case QUERY_THIS:
@@ -85,17 +84,17 @@ func queryForReportedFiles() {
 	fmt.Print(string(b))
 }
 
-func failOnError(err error, errorDescription string) error {
+func failOnError(err error, errorDescription string) {
 	if err != nil {
 		log.WithError(err).Fatal(errorDescription)
 	}
-	return err
 }
 
 func init() {
-	golookIfce = control.NewController()
+	golookIfce = routing.NewRouter()
 
-	RootCmd.AddCommand(queryCmd)
 	queryCmd.Flags().StringVarP(&file, "file", "f", "", "(required) file you are looking for")
 	queryCmd.Flags().StringVarP(&system, "system", "s", "this", "(optional) only look at the given the system for the file")
+
+	RootCmd.AddCommand(queryCmd)
 }

@@ -16,8 +16,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ottenwbe/golook/routing"
-
+	"github.com/ottenwbe/golook/communication"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -47,15 +46,6 @@ var cmdVersion = &cobra.Command{
 	},
 }
 
-var reportCmd = &cobra.Command{
-	Use:   "report",
-	Short: "",
-	Long:  "",
-	Run: func(_ *cobra.Command, _ []string) {
-
-	},
-}
-
 var systemCmd = &cobra.Command{
 	Use:   "system",
 	Short: "",
@@ -75,14 +65,13 @@ func Run() {
 }
 
 func configNetwork() {
-	routing.ConfigLookClient(host, port)
+	communication.ConfigLookClient(host, port)
 }
 
 func init() {
 	RootCmd.AddCommand(cmdVersion)
 	RootCmd.PersistentFlags().StringVarP(&host, "uplink", "u", "http://127.0.0.1", "(optional) Address of the uplink host (default is 127.0.0.1)")
-	RootCmd.PersistentFlags().IntVarP(&port, "port", "p", 8383, "(optional) Address of the server (default is 8383)")
+	RootCmd.PersistentFlags().IntVarP(&port, "port", "p", 8383, "(optional) Port of the uplink host (default is 8383)")
 
-	RootCmd.AddCommand(reportCmd)
 	RootCmd.AddCommand(systemCmd)
 }
