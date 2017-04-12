@@ -17,7 +17,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ottenwbe/golook/routing"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -32,10 +31,13 @@ const (
 	QRY_COMMAND = "query"
 )
 
+type FileQueryData struct {
+	file   string
+	system string
+}
+
 var (
-	file       string
-	system     string
-	golookIfce routing.LookRouter
+	fileQueryData FileQueryData
 )
 
 var queryCmd = &cobra.Command{
@@ -43,26 +45,26 @@ var queryCmd = &cobra.Command{
 	Short: "Query the golook server.",
 	Long:  "Query system, files, and file locations from a golook server.",
 	Run: func(_ *cobra.Command, _ []string) {
-		selectQueryAction(golookIfce)
+		selectQueryAction()
 	},
 }
 
-func selectQueryAction(golookIfce routing.LookRouter) {
-	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Selecting query action.")
-	switch system {
+func selectQueryAction() {
+	log.WithField("command", QRY_COMMAND).WithField("system", fileQueryData.system).Debug("Selecting query action.")
+	switch fileQueryData.system {
 	case QUERY_THIS:
-		queryForReportedFiles()
+		lookupReportedFiles()
 	case QUERY_ALL, QUERY_ALL_DEFAULT:
-		queryForAllFiles()
+		lookupAllFiles()
 	default:
 		log.Fatal("System filtering not supported yet")
 	}
 }
 
-func queryForAllFiles() {
-	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Query for all files.")
+func lookupAllFiles() {
+	log.WithField("command", QRY_COMMAND).WithField("system", fileQueryData.system).Debug("Query for all files.")
 
-	systemFiles, err := golookIfce.QueryAllSystemsForFile(file)
+	systemFiles, err := GolookIfce.QueryAllSystemsForFile(fileQueryData.file)
 	failOnError(err, "Could not query for files.")
 
 	b, err := json.Marshal(systemFiles)
@@ -71,11 +73,11 @@ func queryForAllFiles() {
 	fmt.Print(string(b))
 }
 
-func queryForReportedFiles() {
+func lookupReportedFiles() {
 
-	log.WithField("command", QRY_COMMAND).WithField("system", system).Debug("Query reported files.")
+	log.WithField("command", QRY_COMMAND).WithField("system", fileQueryData.system).Debug("Query reported files.")
 
-	files, err := golookIfce.QueryReportedFiles()
+	files, err := GolookIfce.QueryReportedFiles()
 	failOnError(err, "Could not query for reported files.")
 
 	b, err := json.Marshal(files)
@@ -91,10 +93,11 @@ func failOnError(err error, errorDescription string) {
 }
 
 func init() {
-	golookIfce = routing.NewRouter()
 
-	queryCmd.Flags().StringVarP(&file, "file", "f", "", "(required) file you are looking for")
-	queryCmd.Flags().StringVarP(&system, "system", "s", "this", "(optional) only look at the given the system for the file")
+	fileQueryData = FileQueryData{}
+
+	queryCmd.Flags().StringVarP(&fileQueryData.file, "file", "f", "", "(required) file you are looking for")
+	queryCmd.Flags().StringVarP(&fileQueryData.system, "system", "s", "this", "(optional) only look at the given the system for the file")
 
 	RootCmd.AddCommand(queryCmd)
 }

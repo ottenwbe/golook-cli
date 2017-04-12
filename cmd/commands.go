@@ -17,6 +17,7 @@ import (
 	"fmt"
 
 	"github.com/ottenwbe/golook/communication"
+	"github.com/ottenwbe/golook/routing"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,9 @@ const (
 )
 
 var (
-	host string
-	port int
+	host       string
+	port       int
+	GolookIfce routing.LookRouter
 )
 
 var RootCmd = &cobra.Command{
@@ -66,6 +68,7 @@ func Run() {
 
 func configNetwork() {
 	communication.ConfigLookClient(host, port)
+	GolookIfce = routing.NewRouter()
 }
 
 func init() {

@@ -21,11 +21,15 @@ const (
 	REPORT_COMMAND = "report"
 )
 
+type ReportData struct {
+	file    string
+	folder  string
+	replace bool
+	monitor bool //TODO: Implement permanent reporting
+}
+
 var (
-	reportFile        string
-	reportFolder      string
-	reportPermanent   bool //TODO: Implement permanent reporting
-	reportReplacement bool
+	reportData ReportData
 )
 
 var reportCmd = &cobra.Command{
@@ -34,35 +38,40 @@ var reportCmd = &cobra.Command{
 	Long:  "Report files and folders to the uplink server in order to be able to search them.",
 	Run: func(_ *cobra.Command, _ []string) {
 
-		if reportFile != "" {
+		if reportData.file != "" {
 			doReportFile()
 		}
 
-		if reportFolder != "" {
+		if reportData.folder != "" {
 			doReportFolder()
 		}
 	},
 }
 
 func doReportFile() {
-	//TODO ReportFileF in golookinterface
-	golookIfce.ReportFile(reportFile)
+	if reportData.replace {
+		GolookIfce.ReportFile(reportData.file)
+	} else {
+		GolookIfce.ReportFileR(reportData.file)
+	}
 }
 
 func doReportFolder() {
-	if reportReplacement {
-		golookIfce.ReportFolder(reportFolder)
+	if reportData.replace {
+		GolookIfce.ReportFolder(reportData.folder)
 	} else {
-		golookIfce.ReportFolderR(reportFolder)
+		GolookIfce.ReportFolderR(reportData.folder)
 	}
 }
 
 func init() {
 
-	reportCmd.Flags().StringVarP(&reportFile, "file", "f", "", "(optional) file you want to report")
-	reportCmd.Flags().StringVarP(&reportFolder, "folder", "o", "", "(optional) folder you want to report")
-	reportCmd.Flags().BoolVarP(&reportPermanent, "monitor", "m", true, "(optional) allow server to monitor continously the file or folder")
-	reportCmd.Flags().BoolVarP(&reportReplacement, "replace", "m", true, "(optional) enforces a replacement of all files or folders on the server")
+	reportData = ReportData{}
+
+	reportCmd.Flags().StringVarP(&reportData.file, "file", "f", "", "(optional) file you want to report")
+	reportCmd.Flags().StringVarP(&reportData.folder, "folder", "o", "", "(optional) folder you want to report")
+	reportCmd.Flags().BoolVarP(&reportData.monitor, "monitor", "m", true, "(optional) instruct the server to continously monitor the file or folder")
+	reportCmd.Flags().BoolVarP(&reportData.replace, "replace", "r", true, "(optional) enforces a replacement of all files or folders on the server")
 
 	RootCmd.AddCommand(reportCmd)
 }

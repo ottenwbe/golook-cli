@@ -22,12 +22,12 @@ import (
 var _ = Describe("The query command", func() {
 
 	BeforeEach(func() {
-		golookIfce = routing.NewMockedRouter()
+		GolookIfce = routing.NewMockedRouter()
 	})
 
 	It("triggers a query for reported files, when system is set by using the keyword 'this'", func() {
-		system = QUERY_THIS
+		fileQueryData.system = QUERY_THIS
 		queryCmd.Run(nil, nil)
-		Expect(golookIfce.(*routing.MockedLookController).Visited).To(BeTrue())
+		Expect(GolookIfce.(*routing.MockedLookController).Visited).To(BeTrue())
 	})
 })
