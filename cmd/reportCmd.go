@@ -25,7 +25,7 @@ type ReportData struct {
 	file    string
 	folder  string
 	replace bool
-	monitor bool //TODO: Implement permanent reporting
+	monitor bool
 }
 
 var (
@@ -35,7 +35,7 @@ var (
 var reportCmd = &cobra.Command{
 	Use:   REPORT_COMMAND,
 	Short: "Report files",
-	Long:  "Report files and folders to the uplink server in order to be able to search them.",
+	Long:  "Report files and folders to the uplink server in order to be able to search for them from other devices.",
 	Run: func(_ *cobra.Command, _ []string) {
 
 		if reportData.file != "" {

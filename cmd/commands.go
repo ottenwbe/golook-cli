@@ -48,15 +48,6 @@ var cmdVersion = &cobra.Command{
 	},
 }
 
-var systemCmd = &cobra.Command{
-	Use:   "system",
-	Short: "",
-	Long:  "",
-	Run: func(_ *cobra.Command, _ []string) {
-
-	},
-}
-
 func Run() {
 
 	configNetwork()
