@@ -21,7 +21,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestClients(t *testing.T) {
+func TestCommands(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Commands Test Suite")
 }

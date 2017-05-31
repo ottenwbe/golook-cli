@@ -17,20 +17,13 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/ottenwbe/golook-cli/client"
+	"github.com/ottenwbe/golook/client"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 const (
-	QUERY_THIS        = "this"
-	QUERY_ALL         = "all"
-	QUERY_ALL_DEFAULT = ""
-)
-
-const (
-	QRY_COMMAND = "query"
+	qryCommand = "query"
 )
 
 var (
@@ -38,11 +31,11 @@ var (
 )
 
 var queryCmd = &cobra.Command{
-	Use:   QRY_COMMAND,
-	Short: "Query the golook server.",
-	Long:  "Query system, files, and file locations from a golook server.",
+	Use:   qryCommand,
+	Short: "Query the golook server(s)",
+	Long:  "Query for systems, files, and file locations from the golook backend.",
 	Run: func(_ *cobra.Command, _ []string) {
-		log.WithField("command", QRY_COMMAND).Debug("Query for all files.")
+		log.WithField("command", qryCommand).Debug("Query for files.")
 
 		systemFiles, err := client.GetFiles(searchString)
 		failOnError(err, "Could not query for files.")
@@ -54,11 +47,6 @@ var queryCmd = &cobra.Command{
 	},
 }
 
-func failOnError(err error, errorDescription string) {
-	if err != nil {
-		log.WithError(err).Fatal(errorDescription)
-	}
-}
 
 func init() {
 

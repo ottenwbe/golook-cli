@@ -24,7 +24,7 @@ import (
 
 var _ = Describe("The version command", func() {
 	It("should return the current version", func() {
-		Expect(versionFromCommand()).To(Equal(VERSION))
+		Expect(versionFromCommand()).To(Equal(version))
 	})
 
 })

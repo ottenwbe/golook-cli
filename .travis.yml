@@ -1,18 +1,21 @@
 language: go
 
+services:
+  - docker
+
 go:
   - 1.8
 
-before_script:
-  - for d in $(go list ./... | grep -v vendor); do go vet $d; done
-
 install:
   - go get -v -t ./...
-  - go get github.com/onsi/ginkgo/ginkgo
-  - go get github.com/onsi/gomega
+  - go get -u github.com/onsi/ginkgo/ginkgo
+  - go get -u github.com/onsi/gomega
+  - go get -u github.com/golang/lint/golint
   - export PATH=$PATH:$HOME/gopath/bin
 
 script:
+  - for d in $(go list ./... | grep -v vendor); do go vet $d; done
+  - for d in $(go list ./... | grep -v vendor); do golint $d; done
   - ginkgo *
 
 after_success:

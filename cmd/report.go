@@ -16,33 +16,36 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/ottenwbe/golook-cli/client"
-	"github.com/sirupsen/logrus"
+	"github.com/ottenwbe/golook/broker/models"
+	"github.com/ottenwbe/golook/client"
 	"github.com/spf13/cobra"
+	"path/filepath"
 )
 
 const (
-	REPORT_COMMAND = "report"
+	reportCommand = "report"
 )
 
-var file string
+var (
+	report = models.FileReport{}
+)
 
 var reportCmd = &cobra.Command{
-	Use:   REPORT_COMMAND,
+	Use:   reportCommand,
 	Short: "Report files",
 	Long:  "Report files and folders to the uplink server in order to be able to search for them from other devices.",
 	Run: func(_ *cobra.Command, _ []string) {
-		result, err := client.ReportFiles(file)
-		if err != nil {
-			logrus.WithError(err).Fatal("Cannot report file or folder.")
-		}
+		report.Path, _ = filepath.Abs(report.Path)
+		result, err := client.ReportFiles(report)
+		failOnError(err, "Cannot report file or folder.")
 		fmt.Print(result)
 	},
 }
 
 func init() {
 
-	reportCmd.Flags().StringVarP(&file, "file", "f", ".", "(required) file you want to report (default is the current working directory)")
+	reportCmd.Flags().StringVarP(&report.Path, "path", "p", ".", "(required) path to the folder or file you want to report (default is the current working directory)")
+	reportCmd.Flags().BoolVarP(&report.Delete, "delete", "d", false, "(optional) remove files from being monitored")
 
 	RootCmd.AddCommand(reportCmd)
 }
