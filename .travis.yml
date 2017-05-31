@@ -18,7 +18,7 @@ install:
 script:
   - for d in $(go list ./... | grep -v vendor); do go vet $d; done
   - for d in $(go list ./... | grep -v vendor); do golint $d; done
-  - test/integration/run_integration_tests.sh
+  - test/integration/run_unit_tests.sh
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
