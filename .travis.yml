@@ -15,11 +15,12 @@ install:
   - sudo docker pull golang:1.8.1
   - git clone https://github.com/ottenwbe/golook.git
   - sudo docker build --rm=true --file=golook/test/integration/Dockerfile --tag=golook:latest .
+  - chmod +x run_unit_tests.sh  
 
 script:
   - for d in $(go list ./... | grep -v vendor); do go vet $d; done
   - for d in $(go list ./... | grep -v vendor); do golint $d; done
-  - test/integration/run_unit_tests.sh
+  - sh run_unit_tests.sh
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
