@@ -1,5 +1,6 @@
 # golook-cli
 [![Build Status](https://travis-ci.org/ottenwbe/golook-cli.svg?branch=master)](https://travis-ci.org/ottenwbe/golook-cli)
+[![codecov](https://codecov.io/gh/ottenwbe/golook-cli/branch/master/graph/badge.svg)](https://codecov.io/gh/ottenwbe/golook-cli)
 
 Cli for [golook](https://github.com/ottenwbe/golook).
 
