@@ -3,8 +3,18 @@
 
 Cli for [golook](https://github.com/ottenwbe/golook).
 
-WIP version of the goolook-cli 
+# Build
 
-- More details are coming soon
-- Initial version is coming soon  
+Ensure that go is installed and the GOPATH is set, then:
 
+    go get github.com/ottenwbe/golook-cli
+
+# Run
+
+After that you can get started by calling the tool. It will show you a help message
+
+    golook-cli 
+
+For example, to call the /v1/info endpoint of a locally running golook broker, just type:    
+    
+    golook-cli info -u=http://localhost:8383

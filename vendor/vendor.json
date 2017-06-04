@@ -31,13 +31,6 @@
 			"revisionTime": "2017-04-24T16:02:39Z"
 		},
 		{
-			"checksumSHA1": "QvibMZwbRw2ltwyNCza/0fXUbF0=",
-			"origin": "github.com/docker/docker/vendor/github.com/sirupsen/logrus",
-			"path": "github.com/sirupsen/logrus",
-			"revision": "8cb9d7ec2e56ca360da55d66bc77e799faca1dd0",
-			"revisionTime": "2017-04-24T16:02:39Z"
-		},
-		{
 			"checksumSHA1": "rbjCIKymiTQJ9hxsfmsU/nocG/k=",
 			"path": "github.com/docker/docker/api/types",
 			"revision": "8cb9d7ec2e56ca360da55d66bc77e799faca1dd0",
@@ -419,6 +412,12 @@
 			"revisionTime": "2017-04-24T16:02:39Z"
 		},
 		{
+			"checksumSHA1": "dHot0IDlfHOnB+k2UQamB5zTFwk=",
+			"path": "github.com/ottenwbe/golook",
+			"revision": "4a5cc35eb6ad080b9ce75ce8e3fb2859aaf1315e",
+			"revisionTime": "2017-06-04T18:03:57Z"
+		},
+		{
 			"checksumSHA1": "RapegBD3zY2s/oA4Denv02T0fmU=",
 			"path": "github.com/ottenwbe/golook/broker/models",
 			"revision": "05931166a08a4a1000db3fb6ddfb7eeec0d50a57",
@@ -431,10 +430,17 @@
 			"revisionTime": "2017-05-16T22:10:38Z"
 		},
 		{
-			"checksumSHA1": "Putn/pEnAACZDcypDTtPpBXizow=",
+			"checksumSHA1": "KcRly7tw1WWvc8f017FywPCTgfM=",
 			"path": "github.com/ottenwbe/golook/test/integration",
-			"revision": "05931166a08a4a1000db3fb6ddfb7eeec0d50a57",
-			"revisionTime": "2017-05-16T22:10:38Z"
+			"revision": "4a5cc35eb6ad080b9ce75ce8e3fb2859aaf1315e",
+			"revisionTime": "2017-06-04T18:03:57Z"
+		},
+		{
+			"checksumSHA1": "QvibMZwbRw2ltwyNCza/0fXUbF0=",
+			"origin": "github.com/docker/docker/vendor/github.com/sirupsen/logrus",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "8cb9d7ec2e56ca360da55d66bc77e799faca1dd0",
+			"revisionTime": "2017-04-24T16:02:39Z"
 		},
 		{
 			"checksumSHA1": "fabVNshbE6WKqfO9/ymL8JGFq+k=",
