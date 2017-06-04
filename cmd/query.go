@@ -47,7 +47,6 @@ var queryCmd = &cobra.Command{
 	},
 }
 
-
 func init() {
 
 	queryCmd.Flags().StringVarP(&searchString, "file", "f", "", "(required) file you are looking for")
